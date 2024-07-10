@@ -8,6 +8,7 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
+  vector_math: ^2.1.4
   # path: ^1.8.0
 
 dev_dependencies:
