@@ -6,7 +6,7 @@ import 'position.dart';
 
 class MeanLatitudeSailing {
   Position start;
-  MeanLatitudeSailing(this.start);
+  MeanLatitudeSailing({required this.start});
 
   Map<String, double> to(Position end) {
     double meanLat = (start.lat + end.lat) / 2;
@@ -15,10 +15,18 @@ class MeanLatitudeSailing {
             difLong: difLong(startLong: start.long, endLong: end.long),
             lat: meanLat),
         difLat(startLat: start.lat, endLat: end.lat));
-    double distance =
-        difLat(startLat: start.lat, endLat: end.lat) / cos(course);
-    return {'distance': distance, 'course': course};
-  }///the distance and course is radian unit
+    double distance;
+    if (start.lat != end.lat) {
+      distance=difLat(startLat: start.lat, endLat: end.lat) / cos(course);
+    } else {
+      distance =
+          difLong(startLong: start.long, endLong: end.long) * cos(start.lat);
+    }
+    course = course % (2 * pi);
+    return {'distance': distance.abs(), 'course': course};
+  }
+
+  ///the distance and course is radian unit
 }
 
 class CorrectedMeanLatitudeSailing {
@@ -33,8 +41,16 @@ class CorrectedMeanLatitudeSailing {
             difLong: difLong(startLong: start.long, endLong: end.long),
             lat: meanLat),
         difLat(startLat: start.lat, endLat: end.lat));
-    double distance =
-        difLat(startLat: start.lat, endLat: end.lat) / cos(course);
-    return {'distance': distance, 'course': course};
-  }///the distance and course is radian unit
+    double distance;
+    if (start.lat != end.lat) {
+      distance=difLat(startLat: start.lat, endLat: end.lat) / cos(course);
+    } else {
+      distance =
+          difLong(startLong: start.long, endLong: end.long) * cos(start.lat);
+    }
+    course = course % (2 * pi);
+    return {'distance': distance.abs(), 'course': course};
+  }
+
+  ///the distance and course is radian unit
 }

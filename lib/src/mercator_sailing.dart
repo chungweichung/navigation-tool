@@ -67,13 +67,12 @@ class MercatorSailing {
             C3 * sin4f / 4 -
             C4 * sin6f / 6 +
             C5 * sin8f / 8 -
-            C6 * sin10f / 10)/60);
+            C6 * sin10f / 10) /
+        60);
   }
 
-  Map<String, double> to(
-      {required Position end,
-      bool isEllipticMeridianal = true,
-      bool isEllipticLat = true}) {
+  Map<String, double> to(Position end,
+      {bool isEllipticMeridianal = true, bool isEllipticLat = false}) {
     double dLong = difLong(startLong: start.long, endLong: end.long);
     double meridianalPartDiff, dLat;
     if (isEllipticMeridianal) {
@@ -97,7 +96,12 @@ class MercatorSailing {
       courseAngle = (dLong.sign * (pi / 2));
       course = courseAngle % (pi * 2);
     }
-    double distance = dLat / cos(courseAngle);
-    return {'distance': distance, 'course': course, 'courseAngle': courseAngle};
+    double distance;
+    if (dLat == 0) {
+      distance = dLong * cos(start.lat);
+    } else {
+      distance = dLat / cos(courseAngle);
+    }
+    return {'distance': distance.abs(), 'course': course};
   }
 }

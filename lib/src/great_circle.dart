@@ -16,9 +16,12 @@ class GreatCircle {
         (cos(start.lat) * sin(distance));
     _cosTheta = _cosTheta.clamp(-1, 1);
     double course = acos(_cosTheta);
-    if(difLong(startLong: start.long, endLong: end.long)<0) {
-      course = 2*pi - course;
+    if (difLong(startLong: start.long, endLong: end.long) < 0) {
+      print(difLong(startLong: start.long, endLong: end.long));
+      course = 2 * pi - course;
     }
-    return {'distance': distance, 'course': course};///return radians
+    return {'distance': distance, 'course': course};
+
+    ///return radians
   }
 }
