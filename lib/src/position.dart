@@ -34,6 +34,14 @@ class Position {
     return sail['distance'];
   }
 
+  double dLong(Position other) {
+    return difLong(startLong: long, endLong: other.long);
+  }
+
+  double dLat(Position other) {
+    return difLat(startLat: lat, endLat: other.lat);
+  }
+
   @override
   String toString() => 'Position(lat: $lat, long: $long)';
 }
