@@ -1,3 +1,5 @@
+import 'package:navigation/navigation.dart';
+
 ///lat and long are the radian unit
 class Position {
   final double lat;
@@ -19,11 +21,18 @@ class Position {
     return Position(lat - other.lat, long - other.long);
   }
 
-  /*double distanceTo(Position other) {
-    double dlat = lat - other.lat;
-    double dlong = long - other.long;
-    return sqrt(dlat * dlat + dlong * dlong);
-  }*/
+  double greatCircleDistanceTo(Position other) {
+    Map sail = GreatCircle(start: Position(lat, long)).to(other);
+    return sail['distance'];
+  }
+
+  double mercatorDistanceTo(Position other,
+      {bool isEllipticMeridianal = true, bool isEllipticLat = false}) {
+    Map sail = MercatorSailing(start: Position(lat, long)).to(other,
+        isEllipticMeridianal: isEllipticMeridianal,
+        isEllipticLat: isEllipticLat);
+    return sail['distance'];
+  }
 
   @override
   String toString() => 'Position(lat: $lat, long: $long)';
