@@ -7,7 +7,10 @@ class Position {
 
   Position(this.lat, this.long);
 
-  Position.clone(Position other) : this(other.lat, other.long);
+  Position clone() {
+    return Position(this.lat, this.long);
+  }
+  
 
   Position operator *(num factor) {
     return Position(lat * factor, long * factor);
