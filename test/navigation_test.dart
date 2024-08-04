@@ -56,8 +56,10 @@ void main() {
 
   group('mercator_test', () {
     List<Map> distanceAndCourse = [
-      MeanLatitudeSailing(start: Position(0, 0)).to(Position(0, pi / 2)), //cours90
-      MeanLatitudeSailing(start: Position(0, 0)).to(Position(pi / 2, 0)), //cours000
+      MeanLatitudeSailing(start: Position(0, 0))
+          .to(Position(0, pi / 2)), //cours90
+      MeanLatitudeSailing(start: Position(0, 0))
+          .to(Position(pi / 2, 0)), //cours000
       MeanLatitudeSailing(start: Position(0, 0))
           .to(Position(0, -pi / 2)), //cours270
       MeanLatitudeSailing(start: Position(0, 0))
@@ -75,6 +77,36 @@ void main() {
           closeTo(radians(106.6207025), 0.00003));
       expect(distanceAndCourse[4]['course'],
           closeTo(radians(66.80138162), 0.00003));
+    });
+  });
+
+  group('Position_test', () {
+    test('position_clone_test', () {
+      Position pos = Position(1, 2);
+      Position clone = pos.clone();
+      clone.lat = 4;
+      clone.long = 5;
+      pos.lat = 6;
+      pos.long = 7;
+      expect(clone.lat, 4);
+      expect(clone.long, 5);
+      expect(pos.lat, 6);
+      expect(pos.long, 7);
+    });
+
+    test('should generate random position within start and end range', () {
+      for (int i = 0; i < 10000; i++) {
+        Position pos = Position.random(Position(-1.2, 1.2), Position(0.2, 0.2));
+        expect(pos.lat, inInclusiveRange(-1.2, 0.2));
+        expect(pos.long, inInclusiveRange(0.2, 1.2));
+      }
+    });
+    test('should generate random position within valid range when no start and end', () {
+      for (int i = 0; i < 100; i++) {
+        Position randomPosition = Position.random(null, null);
+        expect(randomPosition.lat, inInclusiveRange(-pi / 2, pi / 2));
+        expect(randomPosition.long, inInclusiveRange(-pi, pi));
+      }
     });
   });
 }

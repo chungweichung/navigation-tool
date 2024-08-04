@@ -1,16 +1,28 @@
+import 'dart:math';
+
 import 'package:navigation/navigation.dart';
 
 ///lat and long are the radian unit
 class Position {
-  final double lat;
-  final double long;
+  double lat;
+  double long;
 
   Position(this.lat, this.long);
+  Position.zero()
+      : lat = 0,
+        long = 0;
+  Position.random(Position? start, Position? end) 
+      : lat = start == null || end == null
+          ? -pi / 2 + Random().nextDouble() * pi
+          : start.lat + Random().nextDouble() * (end.lat - start.lat),
+        long = start == null || end == null
+          ? -pi + Random().nextDouble() * 2 * pi
+          : addDLon(start.long, Random().nextDouble()*difLong(startLong: start.long, endLong: end.long));
+
 
   Position clone() {
     return Position(this.lat, this.long);
   }
-  
 
   Position operator *(num factor) {
     return Position(lat * factor, long * factor);
