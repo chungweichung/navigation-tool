@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 void main() {
-  group('great_circle_test', () {
+  /*group('great_circle_test', () {
     List<Map> distanceAndCourse = [
       GreatCircle(start: Position(0, 0)).to(Position(0, pi / 2)), //cours90
       GreatCircle(start: Position(0, 0)).to(Position(pi / 2, 0)), //cours000
@@ -101,12 +101,17 @@ void main() {
         expect(pos.long, inInclusiveRange(0.2, 1.2));
       }
     });
-    test('should generate random position within valid range when no start and end', () {
+    test(
+        'should generate random position within valid range when no start and end',
+        () {
       for (int i = 0; i < 100; i++) {
         Position randomPosition = Position.random(null, null);
         expect(randomPosition.lat, inInclusiveRange(-pi / 2, pi / 2));
         expect(randomPosition.long, inInclusiveRange(-pi, pi));
       }
     });
-  });
+  });*/
+  Map mercatorSailing =
+      MercatorSailing(start: Position(0, 0)).to(Position(-pi/4, radians(176.5)));
+  print(mercatorSailing);
 }

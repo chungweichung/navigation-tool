@@ -9,13 +9,13 @@ class MercatorSailing {
 
   double ellipticMeridianalPart(double lat) {
     double f = 1 / 298.257223563, eccentricity = sqrt(2 * f - pow(f, 2));
-    return log(tan(0.25 * pi + (lat / 2)) *
-        pow((1 - eccentricity * sin(lat)) / (1 + eccentricity * sin(lat)),
+    return lat.sign*log(tan(0.25 * pi + (lat.abs() / 2)) *
+        pow((1 - eccentricity * sin(lat.abs())) / (1 + eccentricity * sin(lat.abs())),
             eccentricity / 2));
   }
 
   double meridianalPart(double lat) {
-    return log(tan(0.25 * pi + (lat / 2)));
+    return lat.sign*log(tan(0.25 * pi + (lat.abs() / 2)));
   }
 
   double meridianArc(double lat) {
@@ -72,7 +72,7 @@ class MercatorSailing {
   }
 
   Map<String, double> to(Position end,
-      {bool isEllipticMeridianal = true, bool isEllipticLat = false}) {
+      {bool isEllipticMeridianal = false, bool isEllipticLat = false}) {
     double dLong = difLong(startLong: start.long, endLong: end.long);
     double meridianalPartDiff, dLat;
     if (isEllipticMeridianal) {
